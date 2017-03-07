@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<head>
+	<title> My Lover </title>
+	<meta http-equiv="content-type" content="text/html; charset=uft-8">
+	<style type="text/css">
+		@font-face {
+			font-family: digit;
+			src: url('digital-7_mono.ttf') format("truetype");
+		}
+	</style>
+	<link href="css/default.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/garden_dev.js"></script>
+    <script type="text/javascript" src="js/functions_dev.js"></script>
+</head>
+
+<body>
+	<embed style="filter: blue()" width="0" height="0" src="http://www.kuwo.cn/yinyue/520647/" autostart="true"></embed>
+	<div id="mainDiv">
+		<div id="content">
+			<div id="code">
+				<span class="comments">/**</span><br />
+			<span class="space"/><span class="comments">*2017—02-14,</span><br />
+			<span class="space"/><span class="comments">*我们相恋了</span><br />
+			<span class="space"/><span class="comments">*/</span><br />
+			Boy name : <span class="keyword">Jonny</span> <br />
+			Girl name : <span class="keyword">Alicia</span> <br /><br />
+			<span class="comments">想你，想你了. </span><br /><br />
+            你是怎样的精灵，不经意闯进了我的生命.<br /><span class="comments">
+            你是怎样的随意，游走在我心的世界，让我为了你忽喜忽悲，忐忑心情.</span><br /><br />
+			或许是害怕失去，所以才会患得患失;<br /><span class="comments">
+            或许是因为在乎，所以才会阴晴不定.</span><br /><br />
+			想你，想你了。很想很想;<br /><br /><span class="comments">
+            每天都要这样说，每天都要这样写，每天都重复着这样的重复.</span><br />
+			每天都想你，想你，还是想你;<br /><span class="comments">
+            想你的时候，会幸福的微笑.</span><br /><span class="comments">
+            那种快乐，像光波一样在心底迅速蔓延，扩散.</span><br /><span class="keyword">
+            我喜欢坐在,</span> 
+            微醺的黄昏里 <span class="keyword">
+            想你</span>;<br /><span class="keyword">
+            我喜欢在</span> 
+            快走的风中 <span class="keyword">
+            想你</span>;<br /><br /><span class="placeholder"/><span class="comments">
+            我喜欢在看见一个影像，看到一句话的时候想你</span><br /><span class="placeholder"/><span class="comments">
+            我喜欢在登高望远的时候想你.</span><br /><span class="placeholder"/>
+            我喜欢在一杯清茶，一册散文，一处静谧的时光里想你;<br /><br /><span class="comments">
+          想你，想你了。很想很想.</span><br />
+			<br><br>
+            想你，是一种习惯。我在这样的习惯里画地为牢，为你守候一片澄明的爱，为我等待一份静默的时光.<br />
+			想你，是一种习惯。你若安好，我便幸福.<br />
+		</div>
+		<div id="loveHeart">
+			<canvas id="garden"></canvas>
+			<div id="words">
+				<div id="messages">
+					亲爱的，这是我们相爱在一起的时光。
+					<div id="elapseClock"></div>
+				</div>
+				<div id="loveu">
+					喜欢么？<br/>
+					<div class="signature">- My lover O(∩_∩)O~！</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div id="copyright">
+			Inspired by <a href="#/">All my friends</a> thanks.<br />
+			Copyright ? 2017 <a href='http://www.alicia.cc'>alicia.cc</a> 2017-2020
+		</div>
+	</div>
+	<script type="text/javascript">
+		var offsetX = $("#loveHeart").width() / 2;
+		var offsetY = $("#loveHeart").height() / 2 - 55;
+		var displayMode = 1;
+		var together = new Date();
+		together.setFullYear(2017, 02, 14);
+		together.setHours(20);
+		together.setMinutes(0);
+		together.setSeconds(0);
+		together.setMilliseconds(0);
+		
+		$("#loveHeart").click(function(){
+			displayMode *= -1;
+			timeElapse(together, displayMode);
+		});
+		
+		if (!document.createElement('canvas').getContext) {
+			var msg = document.createElement("div");
+			msg.id = "errorMsg";
+			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+			document.body.appendChild(msg);
+			$("#code").css("display", "none")
+			$("#copyright").css("position", "absolute");
+			$("#copyright").css("bottom", "10px");
+		    document.execCommand("stop");
+		} else {
+			setTimeout(function () {
+				adjustWordsPosition();
+				startHeartAnimation();
+			}, 5000);
+
+			timeElapse(together, displayMode);
+			setInterval(function () {
+				timeElapse(together, displayMode);
+			}, 500);
+
+			adjustCodePosition();
+			$("#code").typewriter();
+		}
+	</script>
+</body>
+</html>
