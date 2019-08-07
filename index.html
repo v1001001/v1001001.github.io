@@ -82,7 +82,7 @@
 		var offsetY = $("#loveHeart").height() / 2 - 55;
 		var displayMode = 1;
 		var together = new Date();
-		together.setFullYear(2018, 11, 29);
+		together.setFullYear(2018, 12, 29);
 		together.setHours(13);
 		together.setMinutes(14);
 		together.setSeconds(0);
@@ -90,6 +90,10 @@
 		
 		$("#loveHeart").click(function(){
 			displayMode *= -1;
+			/*
+			 两种日期模式,对应的取值不同
+			*/
+			together.setFullYear(2018, 11, 29);
 			timeElapse(together, displayMode);
 		});
 		
