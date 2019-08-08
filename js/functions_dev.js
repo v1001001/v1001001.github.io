@@ -127,6 +127,9 @@ function timeElapse(date, mode) {
 			current.setDate(current.getDate() - 1);
 		}
 		months = current.getMonth() - date.getMonth();
+		if(days < date.getDate()){
+		    months -= 1; // 月份减1
+        }
 		if (months < 0) {
 			months += 12;
 			current.setYear(current.getFullYear() - 1);
@@ -169,7 +172,8 @@ function adjustWordsPosition() {
 }
 
 function adjustCodePosition() {
-	$('#code').css("margin-top", ($("#garden").height() - $("#code").height()) / 2);
+	//$('#code').css("margin-top", ($("#garden").height() - $("#code").height()) / 2);
+    $('#code').css("margin-top", 0);
 }
 
 function showLoveU() {
