@@ -174,24 +174,28 @@ body {
 .blessing-bubble {
     position: fixed;
     bottom: -50px;
-    background: rgba(255, 237, 245, 0.95);
     padding: 12px 20px;
-    border-radius: 25px;
     box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
     animation: float-bubble 4s ease-in-out;
     pointer-events: none;
     font-size: 16px;
     font-weight: 500;
-    color: #e83e8c;
-    border: 2px solid rgba(255, 182, 193, 0.8);
     min-width: 80px;
     text-align: center;
     transform-origin: center;
     z-index: 1000;
 }
 
+/* 基本气泡样式 - 语音泡泡形状 */
+.bubble-speech {
+    border-radius: 25px;
+    background: rgba(255, 237, 245, 0.95);
+    color: #e83e8c;
+    border: 2px solid rgba(255, 182, 193, 0.8);
+}
+
 /* 气泡尾巴 */
-.blessing-bubble::after {
+.bubble-speech::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -203,9 +207,69 @@ body {
     filter: drop-shadow(0 2px 2px rgba(255, 105, 180, 0.2));
 }
 
-/* 气泡左右装饰 */
-.blessing-bubble::before {
-    content: '❤️';
+/* 云朵形状气泡 */
+.bubble-cloud {
+    border-radius: 50px;
+    background: rgba(240, 248, 255, 0.95);
+    color: #5b9bd5;
+    border: none;
+}
+
+.bubble-cloud::before,
+.bubble-cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(240, 248, 255, 0.95);
+    border-radius: 50%;
+}
+
+.bubble-cloud::before {
+    width: 40px;
+    height: 40px;
+    top: -15px;
+    left: 15px;
+}
+
+.bubble-cloud::after {
+    width: 30px;
+    height: 30px;
+    top: -10px;
+    right: 15px;
+}
+
+/* 气球形状气泡 */
+.bubble-balloon {
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: rgba(255, 230, 238, 0.95);
+    color: #ff6b8b;
+    border: none;
+    box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.1), 0 4px 15px rgba(255, 105, 180, 0.3);
+    transform-origin: bottom center;
+}
+
+.bubble-balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 15px;
+    background: rgba(255, 230, 238, 0.9);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.bubble-balloon::before {
+    content: '🎈';
+    position: absolute;
+    font-size: 14px;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%) rotate(5deg);
+}
+
+/* 气泡装饰 */
+.blessing-bubble .decoration {
     position: absolute;
     font-size: 12px;
     bottom: -4px;
@@ -214,31 +278,131 @@ body {
 }
 
 /* 随机颜色的气泡 */
-.blessing-bubble:nth-of-type(3n+1) {
+.blessing-bubble.bubble-speech:nth-of-type(3n+1) {
     background: rgba(255, 237, 245, 0.95);
     border-color: rgba(255, 182, 193, 0.8);
     color: #e83e8c;
 }
 
-.blessing-bubble:nth-of-type(3n+2) {
+.blessing-bubble.bubble-speech:nth-of-type(3n+2) {
     background: rgba(236, 248, 255, 0.95);
     border-color: rgba(173, 216, 230, 0.8);
     color: #4e89ae;
 }
 
-.blessing-bubble:nth-of-type(3n+3) {
+.blessing-bubble.bubble-speech:nth-of-type(3n+3) {
     background: rgba(255, 253, 236, 0.95);
     border-color: rgba(255, 223, 186, 0.8);
     color: #ff9a76;
 }
 
-/* 随机装饰 */
-.blessing-bubble:nth-of-type(2n+1)::before {
+/* 气球颜色变化 */
+.blessing-bubble.bubble-balloon:nth-of-type(5n+1) {
+    background: rgba(255, 182, 193, 0.95);
+    color: #fff;
+}
+
+.blessing-bubble.bubble-balloon:nth-of-type(5n+2) {
+    background: rgba(135, 206, 250, 0.95);
+    color: #fff;
+}
+
+.blessing-bubble.bubble-balloon:nth-of-type(5n+3) {
+    background: rgba(152, 251, 152, 0.95);
+    color: #fff;
+}
+
+.blessing-bubble.bubble-balloon:nth-of-type(5n+4) {
+    background: rgba(238, 130, 238, 0.95);
+    color: #fff;
+}
+
+.blessing-bubble.bubble-balloon:nth-of-type(5n+5) {
+    background: rgba(255, 215, 0, 0.95);
+    color: #fff;
+}
+
+/* 云朵颜色变化 */
+.blessing-bubble.bubble-cloud:nth-of-type(3n+1) {
+    background: rgba(240, 248, 255, 0.95);
+    color: #5b9bd5;
+}
+
+.blessing-bubble.bubble-cloud:nth-of-type(3n+1)::before,
+.blessing-bubble.bubble-cloud:nth-of-type(3n+1)::after {
+    background: rgba(240, 248, 255, 0.95);
+}
+
+.blessing-bubble.bubble-cloud:nth-of-type(3n+2) {
+    background: rgba(255, 250, 250, 0.95);
+    color: #ff9a76;
+}
+
+.blessing-bubble.bubble-cloud:nth-of-type(3n+2)::before,
+.blessing-bubble.bubble-cloud:nth-of-type(3n+2)::after {
+    background: rgba(255, 250, 250, 0.95);
+}
+
+.blessing-bubble.bubble-cloud:nth-of-type(3n+3) {
+    background: rgba(240, 255, 240, 0.95);
+    color: #66bb6a;
+}
+
+.blessing-bubble.bubble-cloud:nth-of-type(3n+3)::before,
+.blessing-bubble.bubble-cloud:nth-of-type(3n+3)::after {
+    background: rgba(240, 255, 240, 0.95);
+}
+
+/* 装饰样式 */
+.blessing-bubble .decoration.deco-1 {
     content: '❤️';
 }
 
-.blessing-bubble:nth-of-type(2n+2)::before {
+.blessing-bubble .decoration.deco-2 {
     content: '✨';
+}
+
+.blessing-bubble .decoration.deco-3 {
+    content: '🌟';
+}
+
+/* 气球特殊浮动动画 */
+@keyframes float-balloon {
+    0% {
+        bottom: -50px;
+        opacity: 0;
+        transform: scale(0.8) translateX(0) rotate(-5deg);
+    }
+
+    10% {
+        transform: scale(1.1) translateX(-5px) rotate(5deg);
+    }
+
+    20% {
+        bottom: 100px;
+        opacity: 1;
+        transform: scale(1) translateX(0) rotate(-2deg);
+    }
+
+    50% {
+        transform: scale(1.05) translateX(5px) rotate(2deg);
+    }
+
+    80% {
+        bottom: 150px;
+        opacity: 1;
+        transform: scale(1) translateX(0) rotate(-2deg);
+    }
+
+    90% {
+        transform: scale(1.05) translateX(-5px) rotate(2deg);
+    }
+
+    100% {
+        bottom: 200px;
+        opacity: 0;
+        transform: scale(0.9) translateX(0) rotate(0);
+    }
 }
 
 /* 气泡浮动动画 */

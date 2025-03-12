@@ -62,26 +62,62 @@ function startRandomBackgroundChange() {
 function createBubble(text) {
     const bubble = document.createElement('div');
     bubble.className = 'blessing-bubble';
+
+    // 随机选择气泡形状：语音泡泡、云朵或气球
+    const bubbleTypes = ['bubble-speech', 'bubble-cloud', 'bubble-balloon'];
+    const bubbleType = bubbleTypes[Math.floor(Math.random() * bubbleTypes.length)];
+    bubble.classList.add(bubbleType);
+
+    // 设置文本内容
     bubble.textContent = text;
 
-    // 随机左右位置
-    bubble.style.left = Math.random() * (window.innerWidth - 150) + 'px';
+    // 随机左右位置，考虑窗口大小和气泡类型
+    let margin = 150;
+    if (bubbleType === 'bubble-cloud') margin = 180; // 云朵更宽
+    bubble.style.left = Math.random() * (window.innerWidth - margin) + 'px';
 
     // 随机添加动画延迟，让气泡出现更自然
     const animationDelay = Math.random() * 0.5;
     bubble.style.animationDelay = animationDelay + 's';
 
+    // 为气球设置特殊的上升动画
+    if (bubbleType === 'bubble-balloon') {
+        bubble.style.animation = 'float-balloon 5s ease-in-out';
+    }
+
     // 随机大小 (90%-110%)
     const scale = 0.9 + Math.random() * 0.2;
     bubble.style.transform = `scale(${scale})`;
 
-    // 添加动画
+    // 添加装饰物（仅对语音气泡）
+    if (bubbleType === 'bubble-speech') {
+        const decoration = document.createElement('span');
+        decoration.className = 'decoration';
+
+        // 随机选择装饰物
+        const decoTypes = ['deco-1', 'deco-2', 'deco-3'];
+        const decoType = decoTypes[Math.floor(Math.random() * decoTypes.length)];
+        decoration.classList.add(decoType);
+
+        // 设置装饰内容
+        if (decoType === 'deco-1') decoration.textContent = '❤️';
+        else if (decoType === 'deco-2') decoration.textContent = '✨';
+        else decoration.textContent = '🌟';
+
+        bubble.appendChild(decoration);
+    }
+
+    // 添加鼠标悬停动画
     bubble.addEventListener('mouseover', () => {
         if (!bubble.classList.contains('removing')) {
             bubble.style.animation = 'bubble-bounce 0.5s ease-in-out';
             setTimeout(() => {
                 if (bubble && document.body.contains(bubble)) {
-                    bubble.style.animation = 'float-bubble 4s ease-in-out';
+                    if (bubbleType === 'bubble-balloon') {
+                        bubble.style.animation = 'float-balloon 5s ease-in-out';
+                    } else {
+                        bubble.style.animation = 'float-bubble 4s ease-in-out';
+                    }
                     bubble.style.animationPlayState = 'running';
                     bubble.style.animationDelay = '0s';
                 }
@@ -92,13 +128,14 @@ function createBubble(text) {
     document.body.appendChild(bubble);
 
     // 动画结束后移除元素
+    const duration = bubbleType === 'bubble-balloon' ? 5000 : 4000; // 气球上升时间更长
     setTimeout(() => {
         if (bubble && document.body.contains(bubble)) {
             bubble.classList.add('removing');
             bubble.style.opacity = '0';
             setTimeout(() => bubble.remove(), 500);
         }
-    }, 4000 + animationDelay * 1000);
+    }, duration + animationDelay * 1000);
 }
 
 const blessings = [
@@ -621,4 +658,55 @@ document.addEventListener('DOMContentLoaded', () => {
     setupNavigation();
 
     // 移除了结婚特效的自动触发
-}); 
+
+    // 测试门效果
+    if (window.location.href.includes('testDoor=true')) {
+        setTimeout(testDoorEffect, 1000);
+    }
+});
+
+// 仅用于测试的门效果函数
+function testDoorEffect() {
+    // 显示测试消息
+    const message = document.createElement('div');
+    message.className = 'transition-message';
+    message.textContent = '测试中: 开门效果';
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => message.remove(), 500);
+    }, 1500);
+
+    // 创建门效果
+    const doorTransition = createDoorTransition();
+    document.body.appendChild(doorTransition);
+
+    // 打开门
+    setTimeout(() => {
+        doorTransition.classList.add('door-open');
+
+        // 3秒后关闭门
+        setTimeout(() => {
+            doorTransition.classList.remove('door-open');
+            doorTransition.classList.add('door-close');
+
+            // 动画结束后移除
+            setTimeout(() => {
+                doorTransition.remove();
+
+                // 显示测试完成消息
+                const completeMsg = document.createElement('div');
+                completeMsg.className = 'transition-message';
+                completeMsg.textContent = '开门效果测试完成';
+                document.body.appendChild(completeMsg);
+
+                setTimeout(() => {
+                    completeMsg.style.opacity = '0';
+                    setTimeout(() => completeMsg.remove(), 500);
+                }, 1500);
+
+            }, 1000);
+        }, 3000);
+    }, 100);
+} 

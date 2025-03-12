@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过渡效果测试</title>
+    <link type="text/css" rel="stylesheet" href="css/default.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #ffc3d4 0%, #ffe0e9 100%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .test-panel {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #d23c67;
+        }
+
+        h2 {
+            color: #d23c67;
+            margin-top: 25px;
+            font-size: 1.2em;
+        }
+
+        .test-btn {
+            background: #d23c67;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+
+        .test-btn:hover {
+            background: #e74c7d;
+            transform: scale(1.05);
+        }
+
+        .door-variant-btn {
+            background: #9c27b0;
+        }
+
+        .door-variant-btn:hover {
+            background: #ba68c8;
+        }
+
+        .description {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .effect-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .door-variants {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 15px;
+            background: rgba(240, 230, 245, 0.5);
+            border-radius: 10px;
+        }
+
+        .effect-name {
+            font-weight: bold;
+            color: #d23c67;
+        }
+
+        .result-display {
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 240, 245, 0.7);
+            border-radius: 8px;
+            min-height: 60px;
+            font-style: italic;
+        }
+
+        /* 垂直开门效果的样式 */
+        .door-vertical-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .door-top,
+        .door-bottom {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: #f8bbd0;
+            transition: transform 1s ease-in-out;
+        }
+
+        .door-top {
+            top: 0;
+            transform-origin: top;
+        }
+
+        .door-bottom {
+            bottom: 0;
+            transform-origin: bottom;
+        }
+
+        .door-vertical-open .door-top {
+            transform: translateY(-100%);
+        }
+
+        .door-vertical-open .door-bottom {
+            transform: translateY(100%);
+        }
+
+        .door-vertical-close .door-top {
+            transform: translateY(0);
+        }
+
+        .door-vertical-close .door-bottom {
+            transform: translateY(0);
+        }
+
+        /* 斜向开门效果的样式 */
+        .door-diagonal-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .door-diagonal-1,
+        .door-diagonal-2 {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #e1bee7, #ce93d8);
+            transition: transform 1s ease-in-out;
+        }
+
+        .door-diagonal-1 {
+            top: 0;
+            left: 0;
+            transform-origin: top left;
+        }
+
+        .door-diagonal-2 {
+            top: 0;
+            right: 0;
+            transform-origin: bottom right;
+        }
+
+        .door-diagonal-open .door-diagonal-1 {
+            transform: translate(-100%, -100%) rotate(-30deg);
+        }
+
+        .door-diagonal-open .door-diagonal-2 {
+            transform: translate(100%, 100%) rotate(-30deg);
+        }
+
+        .door-diagonal-close .door-diagonal-1 {
+            transform: translate(0, 0) rotate(0);
+        }
+
+        .door-diagonal-close .door-diagonal-2 {
+            transform: translate(0, 0) rotate(0);
+        }
+
+        /* 旋转开门效果的样式 */
+        .door-rotating-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            perspective: 1000px;
+            pointer-events: none;
+        }
+
+        .door-rotating-panel {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #bbdefb, #90caf9);
+            transition: transform 1.2s ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .door-rotating-open .door-rotating-panel {
+            transform: rotateY(90deg);
+        }
+
+        .door-rotating-close .door-rotating-panel {
+            transform: rotateY(0);
+        }
+
+        /* 四扇门效果的样式 */
+        .door-four-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .door-quarter {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: linear-gradient(45deg, #ffcdd2, #ef9a9a);
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .door-quarter-1 {
+            top: 0;
+            left: 0;
+            transform-origin: top left;
+        }
+
+        .door-quarter-2 {
+            top: 0;
+            right: 0;
+            transform-origin: top right;
+        }
+
+        .door-quarter-3 {
+            bottom: 0;
+            left: 0;
+            transform-origin: bottom left;
+        }
+
+        .door-quarter-4 {
+            bottom: 0;
+            right: 0;
+            transform-origin: bottom right;
+        }
+
+        .door-four-open .door-quarter-1 {
+            transform: translate(-100%, -100%);
+        }
+
+        .door-four-open .door-quarter-2 {
+            transform: translate(100%, -100%);
+        }
+
+        .door-four-open .door-quarter-3 {
+            transform: translate(-100%, 100%);
+        }
+
+        .door-four-open .door-quarter-4 {
+            transform: translate(100%, 100%);
+        }
+
+        .door-four-close .door-quarter {
+            transform: translate(0, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-panel">
+        <h1>过渡效果测试页面</h1>
+        <p class="description">
+            此页面用于展示网站的所有过渡特效。<br>
+            点击下方按钮可以测试各种不同的过渡效果。
+        </p>
+
+        <div class="effect-buttons">
+            <button class="test-btn" onclick="testTransitionEffect('door')">开门效果</button>
+            <button class="test-btn" onclick="testTransitionEffect('curtain')">卷帘效果</button>
+            <button class="test-btn" onclick="testTransitionEffect('flip')">3D翻页效果</button>
+            <button class="test-btn" onclick="testTransitionEffect('carousel')">旋转木马效果</button>
+            <button class="test-btn" onclick="testTransitionEffect('circle')">圆心散开效果</button>
+            <button class="test-btn" onclick="testTransitionEffect('fan')">扇叶散开效果</button>
+        </div>
+
+        <h2>开门效果变体</h2>
+        <div class="door-variants">
+            <button class="test-btn door-variant-btn" onclick="testDoorVariant('vertical')">上下开门</button>
+            <button class="test-btn door-variant-btn" onclick="testDoorVariant('diagonal')">斜向开门</button>
+            <button class="test-btn door-variant-btn" onclick="testDoorVariant('rotating')">旋转开门</button>
+            <button class="test-btn door-variant-btn" onclick="testDoorVariant('four')">四扇门</button>
+        </div>
+
+        <div class="result-display" id="result">
+            选择一个效果进行测试
+        </div>
+
+        <p>
+            <a href="index.html">返回主页</a>
+        </p>
+    </div>
+
+    <script type="text/javascript" src="js/interactions.js"></script>
+    <script>
+        // 测试特定的过渡效果
+        function testTransitionEffect(effectType) {
+            document.getElementById('result').innerHTML = `正在测试: <span class="effect-name">${getEffectName(effectType)}</span>`;
+
+            let transition;
+
+            // 根据效果类型创建相应的过渡效果
+            if (effectType === 'door') {
+                transition = createDoorTransition();
+            } else if (effectType === 'curtain') {
+                transition = createCurtainTransition();
+            } else if (effectType === 'flip') {
+                transition = createFlipTransition();
+            } else if (effectType === 'carousel') {
+                transition = createCarouselTransition();
+            } else if (effectType === 'circle') {
+                transition = createCircleTransition();
+            } else if (effectType === 'fan') {
+                transition = createFanTransition();
+            }
+
+            document.body.appendChild(transition);
+
+            // 激活效果（打开）
+            setTimeout(() => {
+                if (effectType === 'door') {
+                    transition.classList.add('door-open');
+                } else if (effectType === 'curtain') {
+                    transition.classList.add('curtain-open');
+                } else if (effectType === 'flip') {
+                    transition.classList.add('flip-open');
+                } else if (effectType === 'carousel') {
+                    transition.classList.add('carousel-open');
+                } else if (effectType === 'circle') {
+                    transition.classList.add('circle-open');
+                } else if (effectType === 'fan') {
+                    transition.classList.add('fan-open');
+                }
+
+                // 维持3秒后关闭效果
+                setTimeout(() => {
+                    if (effectType === 'door') {
+                        transition.classList.remove('door-open');
+                        transition.classList.add('door-close');
+                    } else if (effectType === 'curtain') {
+                        transition.classList.remove('curtain-open');
+                        transition.classList.add('curtain-close');
+                    } else if (effectType === 'flip') {
+                        transition.classList.remove('flip-open');
+                        transition.classList.add('flip-close');
+                    } else if (effectType === 'carousel') {
+                        transition.classList.remove('carousel-open');
+                        transition.classList.add('carousel-close');
+                    } else if (effectType === 'circle') {
+                        transition.classList.remove('circle-open');
+                        transition.classList.add('circle-close');
+                    } else if (effectType === 'fan') {
+                        transition.classList.remove('fan-open');
+                        transition.classList.add('fan-close');
+                    }
+
+                    // 动画结束后移除元素
+                    setTimeout(() => {
+                        transition.remove();
+                        document.getElementById('result').innerHTML = `测试完成: <span class="effect-name">${getEffectName(effectType)}</span> 效果`;
+                    }, 1000);
+                }, 3000);
+            }, 100);
+        }
+
+        // 测试开门效果变体
+        function testDoorVariant(variantType) {
+            document.getElementById('result').innerHTML = `正在测试: <span class="effect-name">${getDoorVariantName(variantType)}</span>`;
+
+            let transition;
+
+            // 创建不同的开门变体效果
+            if (variantType === 'vertical') {
+                transition = createVerticalDoorTransition();
+            } else if (variantType === 'diagonal') {
+                transition = createDiagonalDoorTransition();
+            } else if (variantType === 'rotating') {
+                transition = createRotatingDoorTransition();
+            } else if (variantType === 'four') {
+                transition = createFourDoorTransition();
+            }
+
+            document.body.appendChild(transition);
+
+            // 激活效果（打开）
+            setTimeout(() => {
+                transition.classList.add(`door-${variantType}-open`);
+
+                // 维持3秒后关闭效果
+                setTimeout(() => {
+                    transition.classList.remove(`door-${variantType}-open`);
+                    transition.classList.add(`door-${variantType}-close`);
+
+                    // 动画结束后移除元素
+                    setTimeout(() => {
+                        transition.remove();
+                        document.getElementById('result').innerHTML = `测试完成: <span class="effect-name">${getDoorVariantName(variantType)}</span> 效果`;
+                    }, 1000);
+                }, 3000);
+            }, 100);
+        }
+
+        // 创建垂直开门效果（上下开门）
+        function createVerticalDoorTransition() {
+            const doorTransition = document.createElement('div');
+            doorTransition.className = 'door-vertical-transition';
+
+            const doorTop = document.createElement('div');
+            doorTop.className = 'door-top';
+
+            const doorBottom = document.createElement('div');
+            doorBottom.className = 'door-bottom';
+
+            doorTransition.appendChild(doorTop);
+            doorTransition.appendChild(doorBottom);
+
+            return doorTransition;
+        }
+
+        // 创建斜向开门效果
+        function createDiagonalDoorTransition() {
+            const doorTransition = document.createElement('div');
+            doorTransition.className = 'door-diagonal-transition';
+
+            const doorDiagonal1 = document.createElement('div');
+            doorDiagonal1.className = 'door-diagonal-1';
+
+            const doorDiagonal2 = document.createElement('div');
+            doorDiagonal2.className = 'door-diagonal-2';
+
+            doorTransition.appendChild(doorDiagonal1);
+            doorTransition.appendChild(doorDiagonal2);
+
+            return doorTransition;
+        }
+
+        // 创建旋转开门效果
+        function createRotatingDoorTransition() {
+            const doorTransition = document.createElement('div');
+            doorTransition.className = 'door-rotating-transition';
+
+            const doorPanel = document.createElement('div');
+            doorPanel.className = 'door-rotating-panel';
+
+            doorTransition.appendChild(doorPanel);
+
+            return doorTransition;
+        }
+
+        // 创建四扇门效果
+        function createFourDoorTransition() {
+            const doorTransition = document.createElement('div');
+            doorTransition.className = 'door-four-transition';
+
+            for (let i = 1; i <= 4; i++) {
+                const doorQuarter = document.createElement('div');
+                doorQuarter.className = `door-quarter door-quarter-${i}`;
+                doorTransition.appendChild(doorQuarter);
+            }
+
+            return doorTransition;
+        }
+
+        // 获取效果的中文名称
+        function getEffectName(effectType) {
+            const effectNames = {
+                'door': '开门效果',
+                'curtain': '卷帘效果',
+                'flip': '3D翻页效果',
+                'carousel': '旋转木马效果',
+                'circle': '圆心散开效果',
+                'fan': '扇叶散开效果'
+            };
+            return effectNames[effectType] || effectType;
+        }
+
+        // 获取开门变体的中文名称
+        function getDoorVariantName(variantType) {
+            const variantNames = {
+                'vertical': '上下开门效果',
+                'diagonal': '斜向开门效果',
+                'rotating': '旋转开门效果',
+                'four': '四扇门效果'
+            };
+            return variantNames[variantType] || variantType;
+        }
+    </script>
+</body>
+
+</html>
