@@ -1,1 +1,306 @@
-body{margin:0;padding:0;background:#ffe;font-size:12px;overflow:auto}#mainDiv{width:100%;height:100%}#loveHeart{float:left;width:670px;height:625px}#garden{width:100%;height:100%}#elapseClock{text-align:right;font-size:18px;margin-top:10px;margin-bottom:10px}#words{font-family:"sans-serif";width:505px;font-size:24px;color:#666}#messages{display:none}#elapseClock .digit{font-family:"digit";font-size:36px}#loveu{padding:5px;font-size:22px;margin-top:80px;margin-right:120px;text-align:right;display:none}#loveu .signature{margin-top:10px;font-size:20px;font-style:italic}#code{float:left;width:440px;height:400px;color:#333;font-family:"Consolas","Monaco","Bitstream Vera Sans Mono","Courier New","sans-serif";font-size:12px;!important margin-top:0px}#code .string{color:#2a36ff}#code .keyword{color:#7f0055;font-weight:bold}#code .placeholder{margin-left:15px}#code .space{margin-left:7px}#code .comments{color:#3f7f5f}#copyright{margin-top:10px;text-align:center;width:100%;color:#666}#errorMsg{width:100%;text-align:center;font-size:24px;position:absolute;top:100px;left:0}#copyright a{color:#666}
+body {
+    margin: 0;
+    padding: 0;
+    background: #ffe;
+    font-size: 12px;
+    overflow: auto
+}
+
+#mainDiv {
+    width: 100%;
+    height: 100%
+}
+
+#loveHeart {
+    float: left;
+    width: 670px;
+    height: 625px
+}
+
+#garden {
+    width: 100%;
+    height: 100%
+}
+
+#elapseClock {
+    text-align: right;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+#words {
+    font-family: "sans-serif";
+    width: 505px;
+    font-size: 24px;
+    color: #666
+}
+
+#messages {
+    display: none
+}
+
+#elapseClock .digit {
+    font-family: "digit";
+    font-size: 36px
+}
+
+#loveu {
+    padding: 5px;
+    font-size: 22px;
+    margin-top: 80px;
+    margin-right: 120px;
+    text-align: right;
+    display: none
+}
+
+#loveu .signature {
+    margin-top: 10px;
+    font-size: 20px;
+    font-style: italic
+}
+
+#code {
+    float: left;
+    width: 440px;
+    height: 400px;
+    color: #333;
+    font-family: "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", "sans-serif";
+    font-size: 12px;
+    !important margin-top: 0px
+}
+
+#code .string {
+    color: #2a36ff
+}
+
+#code .keyword {
+    color: #7f0055;
+    font-weight: bold
+}
+
+#code .placeholder {
+    margin-left: 15px
+}
+
+#code .space {
+    margin-left: 7px
+}
+
+#code .comments {
+    color: #3f7f5f
+}
+
+#copyright {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%;
+    color: #666
+}
+
+#errorMsg {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    position: absolute;
+    top: 100px;
+    left: 0
+}
+
+#copyright a {
+    color: #666
+}
+
+/* 点击爱心效果 */
+.click-heart {
+    position: fixed;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    animation: float-heart 1s ease-in-out;
+    color: #ff6b6b;
+    pointer-events: none;
+}
+
+.click-heart::before {
+    content: '❤';
+}
+
+@keyframes float-heart {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* 控制按钮样式 */
+.control-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 祝福气泡效果 */
+.blessing-bubble {
+    position: fixed;
+    bottom: -50px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: float-bubble 4s ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes float-bubble {
+    0% {
+        bottom: -50px;
+        opacity: 0;
+    }
+
+    20% {
+        bottom: 100px;
+        opacity: 1;
+    }
+
+    80% {
+        bottom: 120px;
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 150px;
+        opacity: 0;
+    }
+}
+
+/* 页面过渡效果 */
+body {
+    transition: background 0.5s ease;
+}
+
+/* 结婚特效样式 */
+.wedding-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.couple {
+    display: flex;
+    gap: 20px;
+    animation: coupleFloat 5s ease-in-out;
+}
+
+.groom,
+.bride {
+    font-size: 60px;
+    animation: coupleSpin 5s ease-in-out infinite;
+}
+
+.flowers {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.flower {
+    font-size: 40px;
+    animation: flowerFloat 5s ease-in-out infinite;
+}
+
+.flower:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.flower:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.flower:nth-child(3) {
+    animation-delay: 1s;
+}
+
+@keyframes coupleFloat {
+    0% {
+        transform: translateY(100vh) scale(0.5);
+        opacity: 0;
+    }
+
+    20% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes coupleSpin {
+
+    0%,
+    100% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes flowerFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}

@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+
 <head>
 	<title> My Lover JunGu</title>
 	<meta name="keywords" content="喜欢菌菇酱,大坏蛋,小坏,惊喜,礼物,创意,表白,热恋" />
@@ -8,68 +9,82 @@
 	<style type="text/css">
 		@font-face {
 			font-family: digit;
-			src: url('digital-7_mono.ttf') format("truetype");
+			src: url('assets/fonts/digital-7_mono.ttf') format("truetype");
 		}
 	</style>
-	<link rel="icon" href="img/2d7f18ca18.png" type="image/x-icon">
-	<link rel="shortcut icon" href="img/2d7f18ca18.png" type="image/x-icon">
+	<link rel="icon" href="img/heart-icon.png" type="image/x-icon">
+	<link rel="shortcut icon" href="img/heart-icon.png" type="image/x-icon">
 	<link href="css/default.css" type="text/css" rel="stylesheet">
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/garden_dev.js"></script>
-    <script type="text/javascript" src="js/functions_dev.js"></script>
+	<script type="text/javascript" src="js/vendor/jquery.js"></script>
+	<script type="text/javascript" src="js/garden.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script type="text/javascript" src="js/interactions.js"></script>
 </head>
 
 <body>
-	<embed style="filter: blue()" width="0" height="0" src="audio/1797987100_1511423566622.mp3" autostart="true">
+	<div class="control-panel">
+		<button class="control-btn" id="musicControl" onclick="toggleMusic()">🔊</button>
+		<button class="control-btn" onclick="changeBackground()">🎨</button>
+		<button class="control-btn" onclick="sendRandomBlessing()">💝</button>
+	</div>
+	<embed style="filter: blue()" width="0" height="0" src="audio/background-music.mp3" autostart="true">
 	</embed>
 	<div id="mainDiv">
 		<div id="content">
 			<div id="code">
 				<span class="comments">/**</span><br />
-			<span class="space"/><span class="comments">*2018.12.29 13:14:00</span><br />
-			<span class="space"/><span class="comments">*我们相恋了</span><br />
-			<span class="space"/><span class="comments">*/</span><br />
-			Boy name : <span class="keyword">小海豚（Jeffrey）</span> <br />
-			Girl name : <span class="keyword">小锦鲤（Jun Gu）</span> <br /><br />
+				<span class="space" /><span class="comments">*2018.12.29 13:14:00</span><br />
+				<span class="space" /><span class="comments">*我们相恋了</span><br />
+				<span class="space" /><span class="comments">*/</span><br />
+				Boy name : <span class="keyword">小海豚（Jeffrey）</span> <br />
+				Girl name : <span class="keyword">小锦鲤（Jun Gu）</span> <br /><br />
+				<span class="comments">// 我们的重要时刻</span><br />
+				<span class="keyword">2016.03.28 17:37:00</span> - 初遇<br />
+				<span class="keyword">2018.12.29 13:14:00</span> - 相恋<br />
+				<span class="keyword">2021.12.30</span> - 携手步入婚姻殿堂 💑<br /><br />
 				<span class="comments">起风了，想你.</span><br />
 				<span class="keyword">2016.03.28 17:37:00</span> <br />
 				这是我们第一次相遇开始的日子;<br />
-			       是怎样的缘分让你我在茫茫人海相遇、相识、相知;<br />
-			我们一起相识三载，相守半载，未来的路还会一直携手前行……<br /><br />
-	<span class="comments">风势渐起,想你了. </span><br />
-            你是怎样的精灵，不经意闯进了我的生命.<br />
-            你是怎样的随意，游走在我心的世界，让我为了你忽喜忽悲，忐忑心情.<br />
-	    或许是害怕失去，所以才会患得患失;<br />
-            或许是因为在乎，所以才会阴晴不定.<br /><br />
-	<span class="comments">风起云涌,想你了,很想很想.</span><br />
-            每天都要这样说，每天都要这样写，每天都重复着这样的重复.<br /><br />
-	<span class="comments">风平浪静了,想你,还是想你.</span><br />
-            想你的时候，会幸福的微笑.<br />
-            那种快乐，像光波一样在心底迅速蔓延，扩散.<br /><br />
-	<span class="keyword">我喜欢坐在,</span> 
-            微醺的黄昏里 <span class="keyword">想你</span>;<br />
-        <span class="keyword">我喜欢走在</span> 
-            快乐的风中 <span class="keyword">想你</span>;<br /><br />
-	<span class="placeholder"/>
-            我喜欢在看见一个影像，看到一句话的时候想你<br />
-            我喜欢在登高望远的时候想你.<br />
+				是怎样的缘分让你我在茫茫人海相遇、相识、相知;<br />
+				我们一起相识三载，相守半载，未来的路还会一直携手前行……<br /><br />
+				<span class="comments">风势渐起,想你了. </span><br />
+				你是怎样的精灵，不经意闯进了我的生命.<br />
+				你是怎样的随意，游走在我心的世界，让我为了你忽喜忽悲，忐忑心情.<br />
+				或许是害怕失去，所以才会患得患失;<br />
+				或许是因为在乎，所以才会阴晴不定.<br /><br />
+				<span class="comments">风起云涌,想你了,很想很想.</span><br />
+				每天都要这样说，每天都要这样写，每天都重复着这样的重复.<br /><br />
+				<span class="comments">风平浪静了,想你,还是想你.</span><br />
+				想你的时候，会幸福的微笑.<br />
+				那种快乐，像光波一样在心底迅速蔓延，扩散.<br /><br />
+				<span class="keyword">我喜欢坐在,</span>
+				微醺的黄昏里 <span class="keyword">想你</span>;<br />
+				<span class="keyword">我喜欢走在</span>
+				快乐的风中 <span class="keyword">想你</span>;<br /><br />
+				<span class="placeholder" />
+				我喜欢在看见一个影像，看到一句话的时候想你<br />
+				我喜欢在登高望远的时候想你.<br />
 				我喜欢在一杯清茶，一册散文，一处静谧的时光里想你;</span><br /><br />
-	<span class="comments">
-          想你，想你了。很想很想.</span><br />
-            想你，是一种习惯。<br />我在这样的习惯里画地为牢，为你守候一片澄明的爱，为我等待一份静默的时光.<br />
-			想你，是一种习惯。<br />你若安好，我便幸福.<br /><br />
-		</div>
-		<div id="loveHeart">
-			<canvas id="garden"></canvas>
-			<div id="words">
-				<div id="messages">
-					亲爱的，这是我们相爱在一起的时光。
-					<div id="elapseClock"></div>
-				</div>
-				<div id="loveu">
-					每一天都值得被记录<br/>
-					<div class="signature">- Jin Li De Tun ^(*^__^*)^ </div>
-				</div>
+				<span class="comments">
+					想你，想你了。很想很想.</span><br />
+				想你，是一种习惯。<br />我在这样的习惯里画地为牢，为你守候一片澄明的爱，为我等待一份静默的时光.<br />
+				想你，是一种习惯。<br />你若安好，我便幸福.<br /><br />
+				<span class="comments">// 婚礼誓言</span><br />
+				执子之手，与子偕老.<br />
+				愿得一人心，白首不相离.<br />
+				从此以后，你的名字比我的生命更重要.<br /><br />
+			</div>
+			<div id="loveHeart">
+				<canvas id="garden"></canvas>
+				<div id="words">
+					<div id="messages">
+						亲爱的，这是我们相爱在一起的时光。
+						<div id="elapseClock"></div>
+					</div>
+					<div id="loveu">
+						每一天都值得被记录<br />
+						<div class="signature">- Jin Li De Tun ^(*^__^*)^ </div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -84,12 +99,12 @@
 		var offsetY = $("#loveHeart").height() / 2 - 55;
 		var displayMode = 1;
 		var together = new Date();
-        together.setFullYear(2018, 11, 29);
+		together.setFullYear(2018, 11, 29);
 		together.setHours(13);
 		together.setMinutes(14);
 		together.setSeconds(0);
 		together.setMilliseconds(0);
-		$("#loveHeart").click(function(){
+		$("#loveHeart").click(function () {
 			displayMode *= -1;
 			/*
 			 两种日期模式,对应的取值不同
@@ -100,12 +115,12 @@
 		if (!document.createElement('canvas').getContext) {
 			var msg = document.createElement("div");
 			msg.id = "errorMsg";
-			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+";
 			document.body.appendChild(msg);
 			$("#code").css("display", "none")
 			$("#copyright").css("position", "absolute");
 			$("#copyright").css("bottom", "10px");
-		    document.execCommand("stop");
+			document.execCommand("stop");
 		} else {
 			setTimeout(function () {
 				adjustWordsPosition();
@@ -122,4 +137,5 @@
 		}
 	</script>
 </body>
+
 </html>
