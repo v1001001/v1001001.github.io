@@ -322,7 +322,7 @@
     }
 }
 
-/* 高级页面过渡效果 */
+/* 高级页面过渡效果 - 门效果增强 */
 .door-transition {
     position: fixed;
     top: 0;
@@ -339,19 +339,57 @@
     width: 50%;
     height: 100%;
     top: 0;
-    background: #fff;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1);
+    background: linear-gradient(135deg, #ffc3d4 0%, #ffe0e9 100%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    transition: transform 1.2s cubic-bezier(0.86, 0, 0.07, 1);
+    overflow: hidden;
+}
+
+.door-left::before,
+.door-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.door-left::after,
+.door-right::after {
+    content: '❤️';
+    position: absolute;
+    font-size: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: doorHeartbeat 1.5s infinite alternate;
+}
+
+.door-left::after {
+    right: 30px;
+}
+
+.door-right::after {
+    left: 30px;
 }
 
 .door-left {
     left: 0;
     transform-origin: left;
+    border-right: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .door-right {
     right: 0;
     transform-origin: right;
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .door-open .door-left {
@@ -370,7 +408,17 @@
     transform: perspective(1200px) rotateY(0deg);
 }
 
-/* 卷帘效果 */
+@keyframes doorHeartbeat {
+    0% {
+        transform: translateY(-50%) scale(1);
+    }
+
+    100% {
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+/* 卷帘效果增强 */
 .curtain-transition {
     position: fixed;
     top: 0;
@@ -380,6 +428,7 @@
     z-index: 9999;
     overflow: hidden;
     pointer-events: none;
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .curtain-panel {
@@ -387,9 +436,36 @@
     left: 0;
     width: 100%;
     height: 10%;
-    /* 每个面板高度为10% */
-    background: #fff;
+    background: linear-gradient(to right, #ffc3d4, #ffe0e9);
     transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.curtain-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(0deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 15px 15px;
+}
+
+.curtain-panel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .curtain-panel:nth-child(1) {
@@ -442,12 +518,171 @@
     transition-delay: 0.45s;
 }
 
+.curtain-panel:nth-child(odd) {
+    background: linear-gradient(to right, #ffc3d4, #ffe0e9);
+}
+
+.curtain-panel:nth-child(even) {
+    background: linear-gradient(to right, #ffe0e9, #ffc3d4);
+}
+
 .curtain-open .curtain-panel {
     transform: translateX(-100%);
 }
 
 .curtain-close .curtain-panel {
     transform: translateX(0);
+}
+
+/* 添加新的页面特效 - 3D翻页效果 */
+.flip-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    perspective: 1200px;
+    pointer-events: none;
+}
+
+.flip-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffc3d4, #ffe0e9);
+    transform-origin: center right;
+    transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.flip-page::before {
+    content: '💑';
+    font-size: 80px;
+    opacity: 0.3;
+}
+
+.flip-open .flip-page {
+    transform: rotateY(-180deg);
+}
+
+.flip-close .flip-page {
+    transform: rotateY(0deg);
+}
+
+/* 旋转木马效果 */
+.carousel-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    perspective: 800px;
+    pointer-events: none;
+}
+
+.carousel-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.carousel-face {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 5px solid white;
+}
+
+.carousel-face-1 {
+    transform: translateZ(150px);
+}
+
+.carousel-face-2 {
+    transform: rotateY(60deg) translateZ(150px);
+}
+
+.carousel-face-3 {
+    transform: rotateY(120deg) translateZ(150px);
+}
+
+.carousel-face-4 {
+    transform: rotateY(180deg) translateZ(150px);
+}
+
+.carousel-face-5 {
+    transform: rotateY(240deg) translateZ(150px);
+}
+
+.carousel-face-6 {
+    transform: rotateY(300deg) translateZ(150px);
+}
+
+.carousel-open .carousel-container {
+    transform: translateX(-50%) translateY(-50%) rotateY(-360deg);
+}
+
+.carousel-close .carousel-container {
+    transform: translateX(-50%) translateY(-50%) rotateY(0deg);
+}
+
+/* 添加响应式适配 */
+@media (max-width: 768px) {
+
+    .door-left::after,
+    .door-right::after {
+        font-size: 30px;
+    }
+
+    .flip-page::before {
+        font-size: 60px;
+    }
+
+    .carousel-face {
+        width: 200px;
+        height: 200px;
+        font-size: 40px;
+    }
+
+    .carousel-face-1 {
+        transform: translateZ(100px);
+    }
+
+    .carousel-face-2 {
+        transform: rotateY(60deg) translateZ(100px);
+    }
+
+    .carousel-face-3 {
+        transform: rotateY(120deg) translateZ(100px);
+    }
+
+    .carousel-face-4 {
+        transform: rotateY(180deg) translateZ(100px);
+    }
+
+    .carousel-face-5 {
+        transform: rotateY(240deg) translateZ(100px);
+    }
+
+    .carousel-face-6 {
+        transform: rotateY(300deg) translateZ(100px);
+    }
 }
 
 /* 花瓣雨特效加强 */
@@ -494,4 +729,71 @@
         transform: scale(1);
         opacity: 1;
     }
+}
+
+/* 控制按钮和提示 */
+.control-btn.effect-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.control-btn.effect-btn:hover {
+    transform: scale(1.1) rotate(180deg);
+    background: rgba(255, 255, 255, 1);
+}
+
+.swipe-hint {
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    z-index: 100;
+    transition: opacity 1s;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.transition-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 16px;
+    z-index: 1001;
+    transition: opacity 0.5s;
 }

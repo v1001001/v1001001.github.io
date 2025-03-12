@@ -170,37 +170,126 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* 祝福气泡效果 */
+/* 祝福气泡效果 - 增强版 */
 .blessing-bubble {
     position: fixed;
     bottom: -50px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 10px 20px;
-    border-radius: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 237, 245, 0.95);
+    padding: 12px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
     animation: float-bubble 4s ease-in-out;
     pointer-events: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e83e8c;
+    border: 2px solid rgba(255, 182, 193, 0.8);
+    min-width: 80px;
+    text-align: center;
+    transform-origin: center;
+    z-index: 1000;
 }
 
+/* 气泡尾巴 */
+.blessing-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 10px 8px 0;
+    border-style: solid;
+    border-color: rgba(255, 237, 245, 0.95) transparent transparent;
+    filter: drop-shadow(0 2px 2px rgba(255, 105, 180, 0.2));
+}
+
+/* 气泡左右装饰 */
+.blessing-bubble::before {
+    content: '❤️';
+    position: absolute;
+    font-size: 12px;
+    bottom: -4px;
+    right: -8px;
+    transform: rotate(20deg);
+}
+
+/* 随机颜色的气泡 */
+.blessing-bubble:nth-of-type(3n+1) {
+    background: rgba(255, 237, 245, 0.95);
+    border-color: rgba(255, 182, 193, 0.8);
+    color: #e83e8c;
+}
+
+.blessing-bubble:nth-of-type(3n+2) {
+    background: rgba(236, 248, 255, 0.95);
+    border-color: rgba(173, 216, 230, 0.8);
+    color: #4e89ae;
+}
+
+.blessing-bubble:nth-of-type(3n+3) {
+    background: rgba(255, 253, 236, 0.95);
+    border-color: rgba(255, 223, 186, 0.8);
+    color: #ff9a76;
+}
+
+/* 随机装饰 */
+.blessing-bubble:nth-of-type(2n+1)::before {
+    content: '❤️';
+}
+
+.blessing-bubble:nth-of-type(2n+2)::before {
+    content: '✨';
+}
+
+/* 气泡浮动动画 */
 @keyframes float-bubble {
     0% {
         bottom: -50px;
         opacity: 0;
+        transform: scale(0.8) translateX(0);
+    }
+
+    10% {
+        transform: scale(1.1) translateX(-5px);
     }
 
     20% {
         bottom: 100px;
         opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+
+    50% {
+        transform: scale(1.05) translateX(5px);
     }
 
     80% {
-        bottom: 120px;
+        bottom: 130px;
         opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+
+    90% {
+        transform: scale(1.05) translateX(-5px);
     }
 
     100% {
-        bottom: 150px;
+        bottom: 160px;
         opacity: 0;
+        transform: scale(0.9) translateX(0);
+    }
+}
+
+/* 气泡振动效果 */
+@keyframes bubble-bounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
     }
 }
 
@@ -209,101 +298,7 @@ body {
     transition: background 0.5s ease;
 }
 
-/* 结婚特效样式 */
-.wedding-effect {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    z-index: 1000;
-}
-
-.couple {
-    display: flex;
-    gap: 20px;
-    animation: coupleFloat 5s ease-in-out;
-}
-
-.groom,
-.bride {
-    font-size: 60px;
-    animation: coupleSpin 5s ease-in-out infinite;
-}
-
-.flowers {
-    display: flex;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-.flower {
-    font-size: 40px;
-    animation: flowerFloat 5s ease-in-out infinite;
-}
-
-.flower:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.flower:nth-child(2) {
-    animation-delay: 0.5s;
-}
-
-.flower:nth-child(3) {
-    animation-delay: 1s;
-}
-
-@keyframes coupleFloat {
-    0% {
-        transform: translateY(100vh) scale(0.5);
-        opacity: 0;
-    }
-
-    20% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-
-    80% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(-100vh) scale(0.5);
-        opacity: 0;
-    }
-}
-
-@keyframes coupleSpin {
-
-    0%,
-    100% {
-        transform: rotate(-5deg);
-    }
-
-    50% {
-        transform: rotate(5deg);
-    }
-}
-
-@keyframes flowerFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-}
+/* 结婚特效样式已被移除 */
 
 /* 页面过渡效果 */
 .page-transition {
@@ -342,6 +337,35 @@ body {
     transition: opacity 1s;
 }
 
+/* 点击提示样式 */
+.click-hint {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    z-index: 100;
+    transition: opacity 1s;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
 /* 过渡效果切换消息 */
 .transition-message {
     position: fixed;
@@ -355,4 +379,472 @@ body {
     font-size: 16px;
     z-index: 100;
     transition: opacity 0.5s;
+}
+
+/* 3D翻页效果 */
+.flip-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    perspective: 1200px;
+    pointer-events: none;
+}
+
+.flip-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ffc3d4, #ffe0e9);
+    transform-origin: center right;
+    transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.flip-page::before {
+    content: '💑';
+    font-size: 80px;
+    opacity: 0.3;
+}
+
+.flip-open .flip-page {
+    transform: rotateY(-180deg);
+}
+
+.flip-close .flip-page {
+    transform: rotateY(0deg);
+}
+
+/* 旋转木马效果 */
+.carousel-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    perspective: 800px;
+    pointer-events: none;
+}
+
+.carousel-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.carousel-face {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 5px solid white;
+}
+
+.carousel-face-1 {
+    transform: translateZ(150px);
+}
+
+.carousel-face-2 {
+    transform: rotateY(60deg) translateZ(150px);
+}
+
+.carousel-face-3 {
+    transform: rotateY(120deg) translateZ(150px);
+}
+
+.carousel-face-4 {
+    transform: rotateY(180deg) translateZ(150px);
+}
+
+.carousel-face-5 {
+    transform: rotateY(240deg) translateZ(150px);
+}
+
+.carousel-face-6 {
+    transform: rotateY(300deg) translateZ(150px);
+}
+
+.carousel-open .carousel-container {
+    transform: translateX(-50%) translateY(-50%) rotateY(-360deg);
+}
+
+.carousel-close .carousel-container {
+    transform: translateX(-50%) translateY(-50%) rotateY(0deg);
+}
+
+/* 高级门效果 - 改进版 */
+.door-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.door-left,
+.door-right {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    background: linear-gradient(135deg, #ffc3d4 0%, #ffe0e9 100%);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    transition: transform 1.2s cubic-bezier(0.86, 0, 0.07, 1);
+    overflow: hidden;
+}
+
+.door-left::before,
+.door-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.door-left::after,
+.door-right::after {
+    content: '❤️';
+    position: absolute;
+    font-size: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: doorHeartbeat 1.5s infinite alternate;
+}
+
+.door-left::after {
+    right: 30px;
+}
+
+.door-right::after {
+    left: 30px;
+}
+
+.door-left {
+    left: 0;
+    transform-origin: left;
+    border-right: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.door-right {
+    right: 0;
+    transform-origin: right;
+    border-left: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.door-open .door-left {
+    transform: perspective(1200px) rotateY(120deg);
+}
+
+.door-open .door-right {
+    transform: perspective(1200px) rotateY(-120deg);
+}
+
+.door-close .door-left {
+    transform: perspective(1200px) rotateY(0deg);
+}
+
+.door-close .door-right {
+    transform: perspective(1200px) rotateY(0deg);
+}
+
+@keyframes doorHeartbeat {
+    0% {
+        transform: translateY(-50%) scale(1);
+    }
+
+    100% {
+        transform: translateY(-50%) scale(1.2);
+    }
+}
+
+/* 卷帘效果增强 */
+.curtain-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: hidden;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.curtain-panel {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(to right, #ffc3d4, #ffe0e9);
+    transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.curtain-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(0deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 15px 15px;
+}
+
+.curtain-panel::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.curtain-panel:nth-child(1) {
+    top: 0%;
+    transition-delay: 0s;
+}
+
+.curtain-panel:nth-child(2) {
+    top: 10%;
+    transition-delay: 0.05s;
+}
+
+.curtain-panel:nth-child(3) {
+    top: 20%;
+    transition-delay: 0.1s;
+}
+
+.curtain-panel:nth-child(4) {
+    top: 30%;
+    transition-delay: 0.15s;
+}
+
+.curtain-panel:nth-child(5) {
+    top: 40%;
+    transition-delay: 0.2s;
+}
+
+.curtain-panel:nth-child(6) {
+    top: 50%;
+    transition-delay: 0.25s;
+}
+
+.curtain-panel:nth-child(7) {
+    top: 60%;
+    transition-delay: 0.3s;
+}
+
+.curtain-panel:nth-child(8) {
+    top: 70%;
+    transition-delay: 0.35s;
+}
+
+.curtain-panel:nth-child(9) {
+    top: 80%;
+    transition-delay: 0.4s;
+}
+
+.curtain-panel:nth-child(10) {
+    top: 90%;
+    transition-delay: 0.45s;
+}
+
+.curtain-panel:nth-child(odd) {
+    background: linear-gradient(to right, #ffc3d4, #ffe0e9);
+}
+
+.curtain-panel:nth-child(even) {
+    background: linear-gradient(to right, #ffe0e9, #ffc3d4);
+}
+
+.curtain-open .curtain-panel {
+    transform: translateX(-100%);
+}
+
+.curtain-close .curtain-panel {
+    transform: translateX(0);
+}
+
+/* 圆心散开效果 */
+.circle-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle-particle {
+    position: absolute;
+    width: 40px;
+    height: 300px;
+    transform-origin: bottom center;
+    opacity: 0;
+    transform: rotate(0deg);
+}
+
+.circle-heart {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 30px;
+    opacity: 0.8;
+}
+
+.circle-open .circle-particle {
+    animation: circle-open 1.2s forwards;
+}
+
+.circle-close .circle-particle {
+    animation: circle-close 1.2s forwards;
+}
+
+@keyframes circle-open {
+    0% {
+        opacity: 0;
+        transform-origin: center center;
+        transform: translateY(0) scale(0.1);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(2);
+    }
+}
+
+@keyframes circle-close {
+    0% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(2);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform-origin: center center;
+        transform: translateY(0) scale(0.1);
+    }
+}
+
+/* 扇叶散开效果 */
+.fan-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fan-blade {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 150px 300px 150px;
+    border-color: transparent transparent rgba(255, 192, 203, 0.7) transparent;
+    transform-origin: center top;
+    transform: rotate(0deg) scaleY(0);
+    top: 50%;
+}
+
+.fan-center {
+    position: absolute;
+    font-size: 50px;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(0.2);
+    transition: all 0.5s ease;
+}
+
+.fan-open .fan-blade {
+    animation: fan-open 1.2s forwards;
+}
+
+.fan-open .fan-center {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 0.3s;
+}
+
+.fan-close .fan-blade {
+    animation: fan-close 1.2s forwards;
+}
+
+.fan-close .fan-center {
+    opacity: 0;
+    transform: scale(0.2);
+}
+
+@keyframes fan-open {
+    0% {
+        transform: rotate(var(--rotate)) scaleY(0);
+    }
+
+    100% {
+        transform: rotate(var(--rotate)) scaleY(1);
+    }
+}
+
+@keyframes fan-close {
+    0% {
+        transform: rotate(var(--rotate)) scaleY(1);
+    }
+
+    100% {
+        transform: rotate(var(--rotate)) scaleY(0);
+    }
 }

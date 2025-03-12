@@ -32,6 +32,41 @@ function createCurtainTransition() {
     return curtainTransition;
 }
 
+// 创建3D翻页效果
+function createFlipTransition() {
+    const flipTransition = document.createElement('div');
+    flipTransition.className = 'flip-transition';
+
+    const flipPage = document.createElement('div');
+    flipPage.className = 'flip-page';
+
+    flipTransition.appendChild(flipPage);
+
+    return flipTransition;
+}
+
+// 创建旋转木马效果
+function createCarouselTransition() {
+    const carouselTransition = document.createElement('div');
+    carouselTransition.className = 'carousel-transition';
+
+    const container = document.createElement('div');
+    container.className = 'carousel-container';
+
+    // 旋转木马的6个面
+    const emojis = ['👰', '🤵', '💍', '💐', '🎂', '💝'];
+    for (let i = 0; i < 6; i++) {
+        const face = document.createElement('div');
+        face.className = `carousel-face carousel-face-${i + 1}`;
+        face.innerHTML = emojis[i];
+        container.appendChild(face);
+    }
+
+    carouselTransition.appendChild(container);
+
+    return carouselTransition;
+}
+
 // 返回主页
 function navigateToHome() {
     // 获取URL参数以确定使用什么过渡效果
@@ -50,7 +85,7 @@ function navigateToHome() {
             transition.classList.remove('door-open');
             transition.classList.add('door-close');
         }, 50);
-    } else {
+    } else if (effect === 'curtain') {
         transition = createCurtainTransition();
         transition.classList.add('curtain-open');
         document.body.appendChild(transition);
@@ -60,12 +95,30 @@ function navigateToHome() {
             transition.classList.remove('curtain-open');
             transition.classList.add('curtain-close');
         }, 50);
+    } else if (effect === 'flip') {
+        transition = createFlipTransition();
+        transition.classList.add('flip-open');
+        document.body.appendChild(transition);
+
+        setTimeout(() => {
+            transition.classList.remove('flip-open');
+            transition.classList.add('flip-close');
+        }, 50);
+    } else if (effect === 'carousel') {
+        transition = createCarouselTransition();
+        transition.classList.add('carousel-open');
+        document.body.appendChild(transition);
+
+        setTimeout(() => {
+            transition.classList.remove('carousel-open');
+            transition.classList.add('carousel-close');
+        }, 50);
     }
 
     // 延迟导航以显示过渡效果
     setTimeout(() => {
-        window.location.href = 'index.html';
-    }, 1000);
+        window.location.href = 'index.html?effect=' + effect;
+    }, 1200);
 }
 
 // 结婚纪念日计时器
@@ -157,9 +210,9 @@ function playEntranceAnimation() {
             // 动画完成后移除
             setTimeout(() => {
                 transition.remove();
-            }, 1000);
+            }, 1200);
         }, 50);
-    } else {
+    } else if (effect === 'curtain') {
         transition = createCurtainTransition();
         document.body.appendChild(transition);
 
@@ -171,6 +224,164 @@ function playEntranceAnimation() {
             setTimeout(() => {
                 transition.remove();
             }, 1000);
+        }, 50);
+    } else if (effect === 'flip') {
+        transition = createFlipTransition();
+        document.body.appendChild(transition);
+        transition.classList.add('flip-close');
+
+        setTimeout(() => {
+            transition.classList.remove('flip-close');
+            transition.classList.add('flip-open');
+
+            setTimeout(() => {
+                transition.remove();
+            }, 1500);
+        }, 50);
+    } else if (effect === 'carousel') {
+        transition = createCarouselTransition();
+        document.body.appendChild(transition);
+        transition.classList.add('carousel-close');
+
+        setTimeout(() => {
+            transition.classList.remove('carousel-close');
+            transition.classList.add('carousel-open');
+
+            setTimeout(() => {
+                transition.remove();
+            }, 1500);
+        }, 50);
+    }
+}
+
+// 添加滑动导航
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+
+function handleWeddingSwipe() {
+    const xDiff = touchStartX - touchEndX;
+    const yDiff = touchStartY - touchEndY;
+
+    // 确保是水平滑动而不是垂直滑动
+    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 80) {
+        // 检测右滑动作 (从左向右滑)
+        if (xDiff < 0) {
+            // 右滑，前往主页
+            navigateToHome();
+        }
+    }
+}
+
+// 切换过渡效果类型
+function cycleTransitionEffect() {
+    // 获取URL参数以确定当前使用的过渡效果
+    const urlParams = new URLSearchParams(window.location.search);
+    let effect = urlParams.get('effect') || 'door';
+
+    // 循环切换效果
+    const effects = ['door', 'curtain', 'flip', 'carousel'];
+    const currentIndex = effects.indexOf(effect);
+    const nextIndex = (currentIndex + 1) % effects.length;
+    effect = effects[nextIndex];
+
+    // 更新URL以保存效果设置
+    const url = new URL(window.location);
+    url.searchParams.set('effect', effect);
+    window.history.replaceState({}, '', url);
+
+    // 显示效果已更改的消息
+    const message = document.createElement('div');
+    message.className = 'transition-message';
+
+    const effectNames = {
+        'door': '开门效果',
+        'curtain': '卷帘效果',
+        'flip': '翻页效果',
+        'carousel': '旋转木马效果'
+    };
+
+    message.textContent = `过渡效果已切换为: ${effectNames[effect]}`;
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => message.remove(), 500);
+    }, 1500);
+
+    // 预览效果
+    previewTransitionEffect(effect);
+}
+
+// 预览过渡效果
+function previewTransitionEffect(effect) {
+    let transition;
+
+    if (effect === 'door') {
+        transition = createDoorTransition();
+        document.body.appendChild(transition);
+
+        // 快速打开后关闭
+        setTimeout(() => {
+            transition.classList.add('door-open');
+
+            setTimeout(() => {
+                transition.classList.remove('door-open');
+                transition.classList.add('door-close');
+
+                setTimeout(() => {
+                    transition.remove();
+                }, 1000);
+            }, 500);
+        }, 50);
+    } else if (effect === 'curtain') {
+        transition = createCurtainTransition();
+        document.body.appendChild(transition);
+
+        setTimeout(() => {
+            transition.classList.add('curtain-open');
+
+            setTimeout(() => {
+                transition.classList.remove('curtain-open');
+                transition.classList.add('curtain-close');
+
+                setTimeout(() => {
+                    transition.remove();
+                }, 1000);
+            }, 500);
+        }, 50);
+    } else if (effect === 'flip') {
+        transition = createFlipTransition();
+        document.body.appendChild(transition);
+
+        setTimeout(() => {
+            transition.classList.add('flip-open');
+
+            setTimeout(() => {
+                transition.classList.remove('flip-open');
+                transition.classList.add('flip-close');
+
+                setTimeout(() => {
+                    transition.remove();
+                }, 1000);
+            }, 500);
+        }, 50);
+    } else if (effect === 'carousel') {
+        transition = createCarouselTransition();
+        document.body.appendChild(transition);
+
+        setTimeout(() => {
+            transition.classList.add('carousel-open');
+
+            setTimeout(() => {
+                transition.classList.remove('carousel-open');
+                transition.classList.add('carousel-close');
+
+                setTimeout(() => {
+                    transition.remove();
+                }, 1000);
+            }, 500);
         }, 50);
     }
 }
@@ -198,6 +409,41 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 50);
     });
 
+    // 添加滑动检测
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    });
+
+    document.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleWeddingSwipe();
+    });
+
+    // 添加效果切换按钮
+    const effectBtn = document.createElement('button');
+    effectBtn.className = 'control-btn effect-btn';
+    effectBtn.innerHTML = '🔄';
+    effectBtn.title = '切换过渡效果';
+    effectBtn.onclick = cycleTransitionEffect;
+    document.body.appendChild(effectBtn);
+
     // 自动播放庆祝特效
     setTimeout(celebrateWedding, 2500);
+
+    // 为移动设备添加提示
+    if ('ontouchstart' in window) {
+        setTimeout(() => {
+            const swipeHint = document.createElement('div');
+            swipeHint.className = 'swipe-hint';
+            swipeHint.innerHTML = '👉 向右滑动返回主页';
+            document.body.appendChild(swipeHint);
+
+            setTimeout(() => {
+                swipeHint.style.opacity = '0';
+                setTimeout(() => swipeHint.remove(), 1000);
+            }, 3000);
+        }, 3500);
+    }
 }); 
