@@ -87,6 +87,30 @@ function createWeddingEffect() {
     setTimeout(() => container.remove(), 5000);
 }
 
+// 滑动导航功能
+let touchStartX = 0;
+let touchEndX = 0;
+
+function handleSwipe() {
+    // 检测左滑动作 (从右向左滑)
+    if (touchStartX - touchEndX > 100) {
+        // 左滑，前往结婚页面
+        navigateToWeddingPage();
+    }
+}
+
+function navigateToWeddingPage() {
+    // 显示页面过渡动画
+    const transition = document.createElement('div');
+    transition.className = 'page-transition';
+    document.body.appendChild(transition);
+
+    // 延迟导航以显示过渡效果
+    setTimeout(() => {
+        window.location.href = 'wedding.html';
+    }, 500);
+}
+
 // 初始化交互功能
 document.addEventListener('DOMContentLoaded', () => {
     // 添加点击爱心效果
@@ -104,4 +128,37 @@ document.addEventListener('DOMContentLoaded', () => {
     weddingBtn.innerHTML = '💑';
     weddingBtn.onclick = createWeddingEffect;
     document.querySelector('.control-panel').appendChild(weddingBtn);
+
+    // 添加导航按钮
+    const navBtn = document.createElement('button');
+    navBtn.className = 'control-btn';
+    navBtn.innerHTML = '👉';
+    navBtn.onclick = navigateToWeddingPage;
+    navBtn.title = "查看我们的婚礼";
+    document.querySelector('.control-panel').appendChild(navBtn);
+
+    // 添加滑动检测
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    // 为移动设备添加提示
+    if ('ontouchstart' in window) {
+        setTimeout(() => {
+            const swipeHint = document.createElement('div');
+            swipeHint.className = 'swipe-hint';
+            swipeHint.innerHTML = '👈 向左滑动查看婚礼页面';
+            document.body.appendChild(swipeHint);
+
+            setTimeout(() => {
+                swipeHint.style.opacity = '0';
+                setTimeout(() => swipeHint.remove(), 1000);
+            }, 3000);
+        }, 2000);
+    }
 }); 

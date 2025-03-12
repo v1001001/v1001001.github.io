@@ -1,0 +1,323 @@
+/* 婚礼页面样式 */
+.wedding-page {
+    background: linear-gradient(to bottom, #ffe0e9, #ffc3d4);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.05);
+}
+
+.wedding-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.wedding-title {
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: #d23c67;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wedding-date {
+    font-size: 24px;
+    margin-bottom: 40px;
+    color: #d23c67;
+    font-weight: bold;
+}
+
+.wedding-content {
+    margin: 30px 0;
+    line-height: 1.6;
+}
+
+.wedding-text {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.wedding-photos {
+    margin: 50px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.couple-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.couple {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    animation: shineEffect 5s infinite alternate;
+}
+
+.heart {
+    font-size: 40px;
+    color: #ff4d6d;
+    animation: heartbeat 1s infinite alternate;
+}
+
+.groom,
+.bride {
+    font-size: 60px;
+    animation: coupleSway 3s infinite alternate;
+}
+
+.flowers {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.flower {
+    font-size: 40px;
+    animation: flowerSpin 5s infinite ease-in-out;
+}
+
+.flower:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.flower:nth-child(2) {
+    animation-delay: 0.5s;
+}
+
+.flower:nth-child(3) {
+    animation-delay: 1s;
+}
+
+.wedding-vows {
+    margin: 50px 0;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.wedding-vows h2 {
+    color: #d23c67;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.wedding-vows p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.anniversary {
+    margin: 50px 0;
+}
+
+.anniversary h2 {
+    color: #d23c67;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.clock {
+    font-family: 'digit', monospace;
+    font-size: 24px;
+    color: #d23c67;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.celebrate-btn {
+    background: #d23c67;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 30px 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.celebrate-btn:hover {
+    background: #e74c7d;
+    transform: scale(1.05);
+}
+
+/* 庆祝动画 */
+@keyframes heartbeat {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.3);
+    }
+}
+
+@keyframes shineEffect {
+    0% {
+        filter: drop-shadow(0 0 5px rgba(255, 77, 109, 0.3));
+    }
+
+    100% {
+        filter: drop-shadow(0 0 20px rgba(255, 77, 109, 0.7));
+    }
+}
+
+@keyframes coupleSway {
+    0% {
+        transform: translateX(-5px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translateX(5px) rotate(5deg);
+    }
+}
+
+@keyframes flowerSpin {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(10deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* 移动设备适配 */
+@media (max-width: 768px) {
+    .wedding-container {
+        padding: 40px 15px;
+    }
+
+    .wedding-title {
+        font-size: 32px;
+    }
+
+    .wedding-date {
+        font-size: 20px;
+    }
+
+    .groom,
+    .bride {
+        font-size: 50px;
+    }
+
+    .heart {
+        font-size: 30px;
+    }
+
+    .flower {
+        font-size: 30px;
+    }
+
+    .wedding-vows h2,
+    .anniversary h2 {
+        font-size: 24px;
+    }
+
+    .wedding-text,
+    .wedding-vows p {
+        font-size: 16px;
+    }
+
+    .clock {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .celebrate-btn {
+        padding: 12px 25px;
+        font-size: 16px;
+    }
+}
+
+/* 落花特效 */
+.falling-flower {
+    position: fixed;
+    top: -50px;
+    font-size: 20px;
+    pointer-events: none;
+    animation: falling linear infinite;
+    z-index: 10;
+}
+
+@keyframes falling {
+    0% {
+        opacity: 0;
+        transform: translateY(0) rotate(0deg);
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(360deg);
+    }
+}
+
+/* 页面切换动画 */
+.page-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 9999;
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
