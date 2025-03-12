@@ -321,3 +321,177 @@
         visibility: hidden;
     }
 }
+
+/* 高级页面过渡效果 */
+.door-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.door-left,
+.door-right {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    top: 0;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    transition: transform 1s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.door-left {
+    left: 0;
+    transform-origin: left;
+}
+
+.door-right {
+    right: 0;
+    transform-origin: right;
+}
+
+.door-open .door-left {
+    transform: perspective(1200px) rotateY(120deg);
+}
+
+.door-open .door-right {
+    transform: perspective(1200px) rotateY(-120deg);
+}
+
+.door-close .door-left {
+    transform: perspective(1200px) rotateY(0deg);
+}
+
+.door-close .door-right {
+    transform: perspective(1200px) rotateY(0deg);
+}
+
+/* 卷帘效果 */
+.curtain-transition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.curtain-panel {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    /* 每个面板高度为10% */
+    background: #fff;
+    transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.curtain-panel:nth-child(1) {
+    top: 0%;
+    transition-delay: 0s;
+}
+
+.curtain-panel:nth-child(2) {
+    top: 10%;
+    transition-delay: 0.05s;
+}
+
+.curtain-panel:nth-child(3) {
+    top: 20%;
+    transition-delay: 0.1s;
+}
+
+.curtain-panel:nth-child(4) {
+    top: 30%;
+    transition-delay: 0.15s;
+}
+
+.curtain-panel:nth-child(5) {
+    top: 40%;
+    transition-delay: 0.2s;
+}
+
+.curtain-panel:nth-child(6) {
+    top: 50%;
+    transition-delay: 0.25s;
+}
+
+.curtain-panel:nth-child(7) {
+    top: 60%;
+    transition-delay: 0.3s;
+}
+
+.curtain-panel:nth-child(8) {
+    top: 70%;
+    transition-delay: 0.35s;
+}
+
+.curtain-panel:nth-child(9) {
+    top: 80%;
+    transition-delay: 0.4s;
+}
+
+.curtain-panel:nth-child(10) {
+    top: 90%;
+    transition-delay: 0.45s;
+}
+
+.curtain-open .curtain-panel {
+    transform: translateX(-100%);
+}
+
+.curtain-close .curtain-panel {
+    transform: translateX(0);
+}
+
+/* 花瓣雨特效加强 */
+@keyframes fluttering {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+}
+
+.falling-flower {
+    animation: falling linear infinite, fluttering 2s ease-in-out infinite;
+}
+
+/* 心跳强调效果 */
+.entrance-effect {
+    animation: entranceHeartbeat 1.5s ease-in-out;
+}
+
+@keyframes entranceHeartbeat {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

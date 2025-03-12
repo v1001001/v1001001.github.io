@@ -87,28 +87,99 @@ function createWeddingEffect() {
     setTimeout(() => container.remove(), 5000);
 }
 
-// 滑动导航功能
+// 创建开门过渡效果
+function createDoorTransition() {
+    const doorTransition = document.createElement('div');
+    doorTransition.className = 'door-transition';
+
+    const doorLeft = document.createElement('div');
+    doorLeft.className = 'door-left';
+
+    const doorRight = document.createElement('div');
+    doorRight.className = 'door-right';
+
+    doorTransition.appendChild(doorLeft);
+    doorTransition.appendChild(doorRight);
+
+    return doorTransition;
+}
+
+// 创建卷帘过渡效果
+function createCurtainTransition() {
+    const curtainTransition = document.createElement('div');
+    curtainTransition.className = 'curtain-transition';
+
+    // 创建10个卷帘面板
+    for (let i = 0; i < 10; i++) {
+        const panel = document.createElement('div');
+        panel.className = 'curtain-panel';
+        curtainTransition.appendChild(panel);
+    }
+
+    return curtainTransition;
+}
+
+// 滑动导航功能增强
 let touchStartX = 0;
 let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+let transitionType = 'door'; // 默认使用开门过渡效果，可以是 'door' 或 'curtain'
+
+function toggleTransitionType() {
+    transitionType = transitionType === 'door' ? 'curtain' : 'door';
+    const message = document.createElement('div');
+    message.className = 'transition-message';
+    message.textContent = `过渡效果已切换为: ${transitionType === 'door' ? '开门效果' : '卷帘效果'}`;
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+        message.style.opacity = '0';
+        setTimeout(() => message.remove(), 500);
+    }, 1500);
+}
 
 function handleSwipe() {
-    // 检测左滑动作 (从右向左滑)
-    if (touchStartX - touchEndX > 100) {
-        // 左滑，前往结婚页面
-        navigateToWeddingPage();
+    // 计算水平和垂直滑动距离
+    const xDiff = touchStartX - touchEndX;
+    const yDiff = touchStartY - touchEndY;
+
+    // 确保是水平滑动而不是垂直滑动
+    if (Math.abs(xDiff) > Math.abs(yDiff) && Math.abs(xDiff) > 100) {
+        // 检测左滑动作 (从右向左滑)
+        if (xDiff > 0) {
+            // 左滑，前往结婚页面
+            navigateToWeddingPage();
+        }
     }
 }
 
 function navigateToWeddingPage() {
-    // 显示页面过渡动画
-    const transition = document.createElement('div');
-    transition.className = 'page-transition';
-    document.body.appendChild(transition);
+    let transition;
+
+    // 根据当前设置的过渡类型创建过渡效果
+    if (transitionType === 'door') {
+        transition = createDoorTransition();
+        document.body.appendChild(transition);
+
+        // 给浏览器一些时间进行渲染
+        setTimeout(() => {
+            transition.classList.add('door-open');
+        }, 50);
+    } else {
+        transition = createCurtainTransition();
+        document.body.appendChild(transition);
+
+        // 给浏览器一些时间进行渲染
+        setTimeout(() => {
+            transition.classList.add('curtain-open');
+        }, 50);
+    }
 
     // 延迟导航以显示过渡效果
     setTimeout(() => {
-        window.location.href = 'wedding.html';
-    }, 500);
+        window.location.href = 'wedding.html?effect=' + transitionType;
+    }, 1000);
 }
 
 // 初始化交互功能
@@ -137,13 +208,23 @@ document.addEventListener('DOMContentLoaded', () => {
     navBtn.title = "查看我们的婚礼";
     document.querySelector('.control-panel').appendChild(navBtn);
 
-    // 添加滑动检测
+    // 添加效果切换按钮
+    const effectBtn = document.createElement('button');
+    effectBtn.className = 'control-btn';
+    effectBtn.innerHTML = '🔄';
+    effectBtn.onclick = toggleTransitionType;
+    effectBtn.title = "切换过渡效果";
+    document.querySelector('.control-panel').appendChild(effectBtn);
+
+    // 增强滑动检测
     document.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
     });
 
     document.addEventListener('touchend', e => {
         touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
         handleSwipe();
     });
 
